@@ -1,0 +1,33 @@
+// four main things here are 
+1. Validation
+2. Verification
+3. Authentication
+4. Authorization
+
+Validation:
+      the data we get from the user or any data is in right format or not 
+      we check in Validation.
+
+Verification :
+       Verification means that the detils we have are right or not for example a email we send otp to that user and then when he enter the otp thats what we verfiy email and this process is called has the verfication 
+
+Authentication:
+       Authentication means basiclly we will learn through the example that in instagram server there are core of users so that which user is accesing how we can know it so here come work in authentication 
+
+Authorization:
+       Authorization means basically that user has how much acees for example there are 3 users student faculty director her we know that student can only acces the classroom thats what Authorization means and faculty both staff room and classsroom and director can access all includeing its director room thats what the Authorization means 
+
+
+// flow of the backend code 
+     
+      npm init -y
+      npm i express mongoose cookie-parser dotenv jsonwebtoken
+      src folder 
+          inside -
+                app.js file to genrate a server 
+                db folder // inside db file connect databse with mongose compass
+                model folder //  inside model file schema and model of database create here 
+                controller folder //  inside particular post logic file file for the logic req,res
+                routes folder //  inside particulr routes file  file create the router og get post put patch delete 
+      server.js // to run the server 
+      .env // file for keeping keys 
