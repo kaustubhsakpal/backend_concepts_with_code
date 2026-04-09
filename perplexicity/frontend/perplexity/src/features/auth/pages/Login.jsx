@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { UseAuth } from '../auth_hook/Auth.hook';
 
@@ -12,13 +12,12 @@ const Login = () => {
   const { handellogin } = UseAuth();
   const { user, loading, error } = useSelector((state) => state.Auth);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+ const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      navigate('/', { replace: true });
-    }
-  }, [user, navigate]);
+ 
+  if(!loading && user){
+   return <Navigate to='/'  replace />
+  }
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,8 +60,7 @@ const Login = () => {
     try {
       setErrors({});
       await handellogin(formData);
-      navigate('/')
-      
+      navigate('/');
     } catch (error) {
       // Error is handled by Redux state
     }

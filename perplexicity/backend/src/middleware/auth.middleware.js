@@ -10,12 +10,7 @@ export function authmiddleware(req, res, next) {
             });
         }
 
-        console.log('JWT Secret Key:', process.env.JWT_SECRET_KEY ? 'Present' : 'Missing');
-
         const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-
-        console.log('Decoded token:', decode);
-
         // Attach user data to request object for use in next middleware/routes
         req.user = decode;
 

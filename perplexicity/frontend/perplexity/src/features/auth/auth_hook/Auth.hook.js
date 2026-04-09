@@ -4,7 +4,6 @@ import { register, login, getme } from "../service/auth.api.js";
 
 export function UseAuth() {
   const dispatch = useDispatch();
-
   async function registerhandel({ username, email, password }) {
     try {
       dispatch(setloading(true));
@@ -43,9 +42,13 @@ export function UseAuth() {
       dispatch(setuser(data.user));
       return data;
     } catch (err) {
-      dispatch(seterror(err.error || "Data fetch failed"));
+      const message = err.error || "Data fetch failed";
+      if (message !== "Unauthorized access - No token provided") {
+        dispatch(seterror(message));
+      } else {
+        dispatch(seterror(null));
+      }
       console.log(err);
-      
     } finally {
       dispatch(setloading(false));
     }

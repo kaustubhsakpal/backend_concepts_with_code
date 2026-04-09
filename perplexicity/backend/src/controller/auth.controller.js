@@ -59,10 +59,7 @@ export async function verifycontroller(req, res) {
   user.verify = true;
 
   await user.save();
-
-  const html = `<h1>hi ${user.username},your email is verified successfully</h1>
- <p>you can now login to your account</p>`;
-  res.send(html);
+  res.redirect('http://localhost:5173/login')
 }
 
 export async function logincontroller(req, res) {

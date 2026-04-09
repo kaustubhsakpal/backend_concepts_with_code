@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from "cookie-parser";
 import { Authrouter } from './router/auth.router.js';
 import morgan from 'morgan';
+import { chatRouter } from './router/chat.router.js';
 
 export const app = express();
 
@@ -12,6 +13,10 @@ app.use(cors({
     credentials:true,
     methods:["GET","POST","PATCH","DELETE"]
 }))
+
+app.use(express.static('public'));
 app.use(cookieParser())
 app.use(morgan('dev'));
 app.use('/api/auth',Authrouter)
+
+app.use('/api/chats',chatRouter)
