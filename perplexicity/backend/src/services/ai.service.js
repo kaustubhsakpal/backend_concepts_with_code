@@ -1,12 +1,14 @@
-import {  SystemMessage } from "langchain";
+import {  AIMessage, createAgent, tool } from "langchain";
 import { ChatMistralAI } from "@langchain/mistralai";
-import { HumanMessage } from "langchain";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { HumanMessage ,SystemMessage } from "langchain";
+import * as z from 'zod'
+import { tavilyairesponse } from "./internet.service.js";
 
-const geminimodel =  new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash-lite",
-  apiKey: process.env.GEMENI_API_KEY,
-});
+// import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+// const geminimodel =  new ChatGoogleGenerativeAI({
+//   model: "gemini-2.5-flash-lite",
+//   apiKey: process.env.GEMENI_API_KEY,
+// });
 
 
 
@@ -17,13 +19,40 @@ const Mistralmodel = new ChatMistralAI({
 });
 
 // **************functions*******************
+ const realdatatool =tool(
+   tavilyairesponse,   
+  {
+    name:"getrealdata",
+    description:"to genrate the real world data ",
+    schema:z.object({
+      query:z.string().describe("search the quer on the internet and provide latest data"),
+    })
+  }
+ )
 
+ 
 
+ const agent = createAgent({
+  model:Mistralmodel,
+  tools:[realdatatool]
+  
+ })
 
-
-export async function genrateresponse(message) {  
-  const response = await Mistralmodel.invoke(message);  
-  return response.content;
+export async function genrateresponse(allmessage) {  
+  const response = await agent.invoke({
+    messages:[
+       new SystemMessage("You MUST use the getrealdata tool for any real-time or current information like gold price, weather, news etc.Do NOT answer from your own knowledge."),
+      ...allmessage.map(msg=>{
+   if(msg.role=="user"){
+     return  new HumanMessage(msg.message)
+    }
+    if(msg.role=="ai"){      
+      return new AIMessage(msg.message)
+    }
+  })]
+  });  
+    
+ return response.messages[response.messages.length - 1].content;
 
 }
 

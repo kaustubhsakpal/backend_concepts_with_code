@@ -1,6 +1,6 @@
 FROM node:20-alpine as frontend_builder
 
-COPY ./frontend/perplexity /app
+COPY ./frontend  /app
 WORKDIR /app
 
 RUN npm install
