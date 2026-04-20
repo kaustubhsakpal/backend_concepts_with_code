@@ -1,0 +1,24 @@
+{
+  "name": "rag",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@langchain/core": "^1.1.40",
+    "@langchain/mistralai": "^1.0.7",
+    "@langchain/textsplitters": "^1.0.1",
+    "@pinecone-database/pinecone": "^7.2.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pdf-parse": "^2.4.5",
+    "pdf-parser": "^1.0.5",
+    "pdfjs-dist": "^5.6.205"
+  }
+}
